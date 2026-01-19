@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_app/core/utils/app_images.dart';
+import '../../../../../core/helper/validators.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/widgets/custom_button.dart';
@@ -24,13 +25,7 @@ class CustomLoginForm extends GetWidget<LoginController> {
             hintText: 'Email',
             keyboardType: TextInputType.emailAddress,
             prefixIcon: CustomPrefixIcon(imageName: AppImages.imagesEmail),
-            validator: (value) {
-              if (!RegExp(validationEmail).hasMatch(value)) {
-                return 'Invalid email';
-              } else {
-                return null;
-              }
-            },
+            validator: Validators.validateEmail,
           ),
           const SizedBox(height: 20),
 
@@ -54,13 +49,7 @@ class CustomLoginForm extends GetWidget<LoginController> {
                     ),
                     onPressed: controller.togglePasswordVisibility,
                   ),
-                  validator: (value) {
-                    if (value.toString().length < 6) {
-                      return 'Password should be longer or equal to 6 characters';
-                    } else {
-                      return null;
-                    }
-                  },
+                  validator: Validators.validatePassword,
                 ),
                 const SizedBox(height: 20),
                 const ForgotPasswordTextWidget(),
