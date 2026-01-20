@@ -1,22 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'core/routes/app_pages.dart';
-import 'core/routes/app_routes.dart';
+import 'app/shop_app.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const ShopApp());
-}
-
-class ShopApp extends StatelessWidget {
-  const ShopApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Shop',
-      initialRoute: AppRoutes.welcome,
-      getPages: AppPages.getPages,
-    );
-  }
 }
