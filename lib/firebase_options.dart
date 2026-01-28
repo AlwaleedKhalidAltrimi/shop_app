@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -40,8 +41,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCTVRE0dMmpnKhGYxaQmwQAsJaq8BrMB08',
+  static FirebaseOptions web = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_API_KEY_WEB']!,
     appId: '1:953638705477:web:997cc36d14d40a512b462c',
     messagingSenderId: '953638705477',
     projectId: 'shop-app-14723',
@@ -50,16 +51,16 @@ class DefaultFirebaseOptions {
     measurementId: 'G-QCQY7B97LB',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA9FnCT8KT0Ql0SYok7svabojNmQOp-xSI',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_API_KEY_ANDROID']!,
     appId: '1:953638705477:android:f14b7dc1390e2d9a2b462c',
     messagingSenderId: '953638705477',
     projectId: 'shop-app-14723',
     storageBucket: 'shop-app-14723.firebasestorage.app',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA03uJs9ycr1JC0TMz1q7OQ7vKcA7yWpLU',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_API_KEY_IOS']!,
     appId: '1:953638705477:ios:8c4f00a65bd50adc2b462c',
     messagingSenderId: '953638705477',
     projectId: 'shop-app-14723',
@@ -67,8 +68,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.shopApp',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyA03uJs9ycr1JC0TMz1q7OQ7vKcA7yWpLU',
+  static FirebaseOptions macos = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_API_KEY_IOS']!,
     appId: '1:953638705477:ios:8c4f00a65bd50adc2b462c',
     messagingSenderId: '953638705477',
     projectId: 'shop-app-14723',
@@ -76,8 +77,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.shopApp',
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCTVRE0dMmpnKhGYxaQmwQAsJaq8BrMB08',
+  static FirebaseOptions windows = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_API_KEY_WEB']!,
     appId: '1:953638705477:web:39d38c2ae8d1823a2b462c',
     messagingSenderId: '953638705477',
     projectId: 'shop-app-14723',
