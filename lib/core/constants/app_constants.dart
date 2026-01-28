@@ -1,5 +1,5 @@
-class AppStrings {
-  AppStrings._();
+class AppConstants {
+  AppConstants._();
 
   static const String validationName = r'^[a-z A-Z]+$';
   static const String validationEmail =

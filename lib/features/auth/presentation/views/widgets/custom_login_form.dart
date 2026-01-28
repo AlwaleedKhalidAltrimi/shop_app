@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:shop_app/core/utils/app_images.dart';
 import '../../../../../core/helper/validators.dart';
 import '../../../../../core/utils/app_colors.dart';
-import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/widgets/custom_button.dart';
 import '../../controllers/login_controller.dart';
 import 'custom_auth_text_from_field.dart';
@@ -16,7 +15,7 @@ class CustomLoginForm extends GetWidget<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      // key: controller.formKey,
+      key: controller.formKey,
       child: Column(
         children: [
           // Email field
@@ -59,7 +58,7 @@ class CustomLoginForm extends GetWidget<LoginController> {
                     ? CircularProgressIndicator(color: AppColors.white)
                     : CustomButton(
                         text: "LOG IN",
-                        onPressed: controller.signInUsingFirebase,
+                        onPressed: controller.logInUsingFirebase,
                       ),
               ],
             ),

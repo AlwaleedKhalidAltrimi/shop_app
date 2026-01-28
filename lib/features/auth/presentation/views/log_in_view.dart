@@ -28,7 +28,7 @@ class LogInView extends GetView<LoginController> {
                     promptText: 'Don\'t have an account?',
                     linkText: 'Sign up',
                     onTap: () {
-                      Get.toNamed(AppRoutes.signUp);
+                      Get.offNamed(AppRoutes.signUp);
                     },
                   ),
                 ],

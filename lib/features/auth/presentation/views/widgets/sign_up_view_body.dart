@@ -9,7 +9,7 @@ class SignUpViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 120),
+        const SizedBox(height: 80),
         CustomAuthText(promptText: 'SIGN', linkText: 'UP'),
         const SizedBox(height: 60),
         const CustomSignUpForm(),

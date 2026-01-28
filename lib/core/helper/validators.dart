@@ -1,8 +1,9 @@
-import '../utils/app_strings.dart';
+import '../constants/app_constants.dart';
 
 class Validators {
   static String? validateEmail(String? value) {
-    if (value == null || !RegExp(AppStrings.validationEmail).hasMatch(value)) {
+    if (value == null ||
+        !RegExp(AppConstants.validationEmail).hasMatch(value)) {
       return 'Invalid email';
     }
     return null;
@@ -11,7 +12,7 @@ class Validators {
   static String? validateName(String? value) {
     if (value == null ||
         value.length <= 2 ||
-        !RegExp(AppStrings.validationName).hasMatch(value)) {
+        !RegExp(AppConstants.validationName).hasMatch(value)) {
       return 'Enter valid name';
     }
     return null;

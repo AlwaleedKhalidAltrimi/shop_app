@@ -52,4 +52,16 @@ abstract class AppStyles {
     fontFamily: FontFamilyHelper.poppins,
     fontWeight: FontWeightHelper.bold,
   );
+  static TextStyle font14extraBoldPoppins = TextStyle(
+    fontSize: 14,
+    color: AppColors.primaryColor,
+    fontFamily: FontFamilyHelper.poppins,
+    fontWeight: FontWeightHelper.extraBold,
+  );
+  static TextStyle font12mediumPoppins = TextStyle(
+    fontSize: 12,
+    color: AppColors.black,
+    fontFamily: FontFamilyHelper.poppins,
+    fontWeight: FontWeightHelper.medium,
+  );
 }

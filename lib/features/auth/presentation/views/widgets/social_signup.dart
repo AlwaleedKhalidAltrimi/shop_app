@@ -20,7 +20,7 @@ class SocialSignup extends StatelessWidget {
           width: size.width * 0.14,
           onTap: onFacebookTap,
         ),
-        const SizedBox(width: 14),
+        const SizedBox(width: 25),
         SocialIcon(
           image: AppImages.imagesGoogle,
           width: size.width * 0.14,

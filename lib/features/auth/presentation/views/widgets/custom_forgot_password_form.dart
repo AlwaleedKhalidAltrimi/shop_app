@@ -15,6 +15,7 @@ class CustomForgotPasswrodForm extends GetWidget<ForgotPasswordController> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Form(
+        key: controller.formKey,
         child: Column(
           children: [
             // Email field
@@ -25,7 +26,7 @@ class CustomForgotPasswrodForm extends GetWidget<ForgotPasswordController> {
               prefixIcon: CustomPrefixIcon(imageName: AppImages.imagesEmail),
               validator: Validators.validateEmail,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 45),
             Obx(
               () => controller.isLoading.value
                   ? CircularProgressIndicator(color: AppColors.white)

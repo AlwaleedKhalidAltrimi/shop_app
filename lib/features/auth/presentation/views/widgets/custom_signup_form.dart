@@ -16,13 +16,14 @@ class CustomSignUpForm extends GetWidget<SignupController> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: controller.formKey,
       child: Column(
         children: [
           // Name field
           CustomAuthTextFromField(
             controller: controller.nameController,
             hintText: 'User Name',
-            prefixIcon: Image.asset(AppImages.imagesUser),
+            prefixIcon: CustomPrefixIcon(imageName: AppImages.imagesUser),
             validator: Validators.validateName,
           ),
           const SizedBox(height: 20),
@@ -32,7 +33,7 @@ class CustomSignUpForm extends GetWidget<SignupController> {
             controller: controller.emailController,
             hintText: 'Email',
             keyboardType: TextInputType.emailAddress,
-            prefixIcon: Image.asset(AppImages.imagesEmail),
+            prefixIcon: CustomPrefixIcon(imageName: AppImages.imagesEmail),
             validator: Validators.validateEmail,
           ),
           const SizedBox(height: 20),
