@@ -69,7 +69,7 @@ class LoginController extends GetxController {
         if (credential.user!.emailVerified) {
           debugPrint('Email verified. Navigating to home');
           showCustomToast("Signed in successfully", type: ToastType.success);
-          Get.offAllNamed(AppRoutes.homeNavBar);
+          Get.offAllNamed(AppRoutes.main);
         } else {
           debugPrint('Email not verified. Showing toast');
           showCustomToast("Please verify your email address");
@@ -189,7 +189,7 @@ class LoginController extends GetxController {
         "Signed in with Google successfully",
         type: ToastType.success,
       );
-      Get.offAllNamed(AppRoutes.homeNavBar);
+      Get.offAllNamed(AppRoutes.main);
     } on FirebaseAuthException catch (e) {
       debugPrint(
         "Firebase Auth Error during Google sign in: ${e.code} - ${e.message}",
@@ -280,7 +280,7 @@ class LoginController extends GetxController {
         "Signed in with Facebook successfully",
         type: ToastType.success,
       );
-      Get.offAllNamed(AppRoutes.homeNavBar);
+      Get.offAllNamed(AppRoutes.main);
     } on FirebaseAuthException catch (e) {
       debugPrint("Facebook Firebase Auth Error: ${e.code} - ${e.message}");
       showError("Firebase auth error: ${e.code}");
