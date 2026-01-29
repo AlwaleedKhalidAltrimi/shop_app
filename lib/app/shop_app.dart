@@ -11,7 +11,7 @@ class ShopApp extends StatelessWidget {
   String _getInitialRoute() {
     // If startAtHome is true, go to home
     if (startAtHome) {
-      return AppRoutes.homeNavBar;
+      return AppRoutes.main;
     }
     // Otherwise, show welcome screen
     return AppRoutes.welcome;
