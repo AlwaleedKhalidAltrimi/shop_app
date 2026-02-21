@@ -1,5 +1,11 @@
 import 'package:get_storage/get_storage.dart';
 
+class StorageKeys {
+  static const userId = 'userId';
+  static const userEmail = 'userEmail';
+  static const userName = 'userName';
+}
+
 class GetStorageUtil {
   static final GetStorage _box = GetStorage();
 
@@ -9,29 +15,33 @@ class GetStorageUtil {
   }
 
   // User-related methods
-  static String? getUserId() => _box.read<String?>('userId');
-  static String? getUserEmail() => _box.read<String?>('userEmail');
-  static String? getUserName() => _box.read<String?>('userName');
-  static bool isLoggedIn() => _box.read<bool>('isLoggedIn') ?? false;
+  static String? getUserId() => _box.read(StorageKeys.userId);
+  static String? getUserEmail() => _box.read(StorageKeys.userEmail);
+  static String? getUserName() => _box.read(StorageKeys.userName);
+  static bool isLoggedIn() {
+    final userId = getUserId();
+    return userId != null && userId.trim().isNotEmpty;
+  }
 
   // Write user data
   static Future<void> setUserData({
-    String? userId,
-    String? userEmail,
+    required String userId,
+    required String userEmail,
     String? userName,
   }) async {
-    if (userId != null) await _box.write('userId', userId);
-    if (userEmail != null) await _box.write('userEmail', userEmail);
-    if (userName != null) await _box.write('userName', userName);
-    await _box.write('isLoggedIn', true);
+    await _box.write(StorageKeys.userId, userId);
+    await _box.write(StorageKeys.userEmail, userEmail);
+
+    if (userName != null) {
+      await _box.write(StorageKeys.userName, userName);
+    }
   }
 
   // Clear user data
   static Future<void> clearUserData() async {
-    await _box.remove('userId');
-    await _box.remove('userEmail');
-    await _box.remove('userName');
-    await _box.write('isLoggedIn', false);
+    await _box.remove(StorageKeys.userId);
+    await _box.remove(StorageKeys.userEmail);
+    await _box.remove(StorageKeys.userName);
   }
 
   // Generic methods
