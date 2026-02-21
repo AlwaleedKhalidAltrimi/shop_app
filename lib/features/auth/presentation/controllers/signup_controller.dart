@@ -44,10 +44,10 @@ class SignupController extends GetxController {
     termsAccepted.value = value ?? false;
   }
 
+  // ================= SIGN UP USING FIREBASE ====================
+
   Future<void> signUpUsingFirebase() async {
     if (!termsAccepted.value) {
-      // Show error message if terms are not accepted
-      // showError("Please accept the terms and conditions");
       showCustomSnackBar(
         title: "Warning",
         message: "Please accept the terms and conditions",
@@ -61,35 +61,41 @@ class SignupController extends GetxController {
       isLoading.value = true;
 
       try {
-        debugPrint('Creating user with email: $email');
+        debugPrint("Creating user in Firebase Auth with email: $email");
         final userCredential = await auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
-        debugPrint('User created successfully: ${userCredential.user?.uid}');
+
+        final user = userCredential.user;
+        if (user == null) {
+          debugPrint("User creation failed: user is null");
+          throw Exception("User creation failed");
+        }
+        debugPrint('User created successfully. UID: ${user.uid}');
 
         // Add user profile to Firestore
-        debugPrint('Adding user profile to Firestore');
-        await _addUserProfile();
+        debugPrint('Adding user profile to Firestore...');
+        await _addUserProfile(user);
         debugPrint('User profile added successfully');
 
         // Send email verification
-        debugPrint('Sending email verification');
-        await _verifyEmail();
+        debugPrint('Sending email verification...');
+        await _verifyEmail(user);
         debugPrint('Email verification sent');
 
         // Store user data in GetStorage
-        final user = auth.currentUser;
-        if (user != null) {
-          debugPrint('Storing user data in GetStorage');
+
+        if (user.email != null) {
+          debugPrint('Storing user data in GetStorage...');
           await GetStorageUtil.setUserData(
             userId: user.uid,
-            userEmail: user.email,
+            userEmail: user.email!,
             userName: name,
           );
           debugPrint('User data stored successfully');
         }
-
+        debugPrint("Signup process completed successfully.");
         // Successfully created user
         if (!isClosed) {
           isLoading.value = false;
@@ -113,6 +119,8 @@ class SignupController extends GetxController {
       }
     }
   }
+
+  // ================= HANDLE ERRORS ====================
 
   void _signUpHandleException(FirebaseAuthException e) {
     debugPrint("FirebaseAuthException: ${e.code} - ${e.message}");
@@ -143,35 +151,36 @@ class SignupController extends GetxController {
     }
   }
 
-  // Future<void> verifyEmail() async {
-  //   await FirebaseAuth.instance.currentUser!.sendEmailVerification();
-  // }
+  //   ================= VERIFY EMAIL =================
 
-  Future<void> _verifyEmail() async {
+  Future<void> _verifyEmail(User user) async {
     try {
-      final user = auth.currentUser;
-      if (user != null && !user.emailVerified) {
-        // await user.reload(); // إعادة تحميل بيانات المستخدم
+      if (!user.emailVerified) {
         await user.sendEmailVerification();
         debugPrint('Verification email sent to ${user.email}');
+      } else {
+        debugPrint("User email already verified.");
       }
     } catch (e) {
       debugPrint('Error sending verification email: $e');
-      // Don't throw error here, just log it. Email verification is not critical for sign up
     }
   }
 
-  Future<void> _addUserProfile() async {
+  // ================= ADD USER PROFILE =================
+
+  Future<void> _addUserProfile(User user) async {
     try {
-      CollectionReference users = firestore.collection("users");
-      await users.add({
-        "email": email,
+      await firestore.collection("users").doc(user.uid).set({
+        "uid": user.uid,
+        "email": user.email,
         "user_name": name,
         "created_at": FieldValue.serverTimestamp(),
       });
       debugPrint('User profile added to Firestore for $email');
     } catch (e) {
-      debugPrint('Error adding user profile to Firestore: $e');
+      debugPrint("Error storing user profile: $e");
+      await user.delete();
+      debugPrint("User deleted from Firebase Auth due to Firestore failure.");
       rethrow; // Rethrow to be caught by signUpUsingFirebase
     }
   }
