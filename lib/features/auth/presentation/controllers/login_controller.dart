@@ -17,6 +17,10 @@ class LoginController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  // Getters (Trimmed Values)
+  String get email => emailController.text.trim();
+  String get password => passwordController.text.trim();
+
   // Form state
   // Password visibility
   RxBool isPasswordHidden = true.obs;
@@ -33,12 +37,12 @@ class LoginController extends GetxController {
     isPasswordHidden.toggle();
   }
 
+  // ================= SIGN IN USING FIREBASE ====================
+
   Future<void> logInUsingFirebase() async {
     debugPrint('Validating login form...');
     if (formKey.currentState?.validate() ?? false) {
       isLoading.value = true;
-      final email = emailController.text.trim();
-      final password = passwordController.text.trim();
 
       try {
         debugPrint('Attempting to sign in with email: $email');
@@ -46,14 +50,16 @@ class LoginController extends GetxController {
           email: email,
           password: password,
         );
-        debugPrint('Sign in successful: ${credential.user?.uid}');
+
+        final user = credential.user;
+        debugPrint('Sign in successful: UID: ${credential.user?.uid}');
 
         // Store user data in GetStorage
         debugPrint('Storing user data in GetStorage');
         await GetStorageUtil.setUserData(
-          userId: credential.user!.uid,
-          userEmail: credential.user!.email,
-          userName: credential.user!.displayName ?? email.split('@')[0],
+          userId: user!.uid,
+          userEmail: user.email!,
+          userName: user.displayName ?? email.split('@')[0],
         );
         debugPrint('User data stored successfully');
 
@@ -63,15 +69,13 @@ class LoginController extends GetxController {
         }
 
         // Check if email is verified
-        debugPrint(
-          'Checking email verification status: ${credential.user?.emailVerified}',
-        );
-        if (credential.user!.emailVerified) {
+        debugPrint('Checking email verification status: ${user.emailVerified}');
+        if (user.emailVerified) {
           debugPrint('Email verified. Navigating to home');
           showCustomToast("Signed in successfully", type: ToastType.success);
           Get.offAllNamed(AppRoutes.main);
         } else {
-          debugPrint('Email not verified. Showing toast');
+          debugPrint('Email not verified for $email');
           showCustomToast("Please verify your email address");
         }
       } on FirebaseAuthException catch (e) {
@@ -119,6 +123,8 @@ class LoginController extends GetxController {
         showError("An error occurred: ${e.message ?? 'Unknown error'}");
     }
   }
+
+  // ================= GOOGLE LOGIN =================
 
   Future<void> googleLogIn() async {
     debugPrint('Starting Google sign in process');
@@ -179,7 +185,7 @@ class LoginController extends GetxController {
       debugPrint('Storing user data in GetStorage for Google user');
       await GetStorageUtil.setUserData(
         userId: userCredential.user!.uid,
-        userEmail: userCredential.user!.email,
+        userEmail: userCredential.user!.email!,
         userName: userCredential.user!.displayName ?? "No Name",
       );
       debugPrint('User data stored successfully for Google user');
@@ -208,6 +214,7 @@ class LoginController extends GetxController {
     }
   }
 
+  // ================= FACEBOOK LOGIN =================
   Future<void> facebookLogIn() async {
     debugPrint('Starting Facebook sign in process');
     isLoading.value = true;
@@ -270,7 +277,7 @@ class LoginController extends GetxController {
       debugPrint('Storing user data in GetStorage for Facebook user');
       await GetStorageUtil.setUserData(
         userId: userCredential.user!.uid,
-        userEmail: userCredential.user!.email,
+        userEmail: userCredential.user!.email!,
         userName: userCredential.user!.displayName ?? "No Name",
       );
       debugPrint('User data stored successfully for Facebook user');
@@ -297,6 +304,8 @@ class LoginController extends GetxController {
     }
   }
 
+  // ================= SIGN OUT =================
+
   Future<void> signOutFromApp() async {
     debugPrint('Starting sign out process');
     isLoading.value = true;
@@ -310,10 +319,7 @@ class LoginController extends GetxController {
       if (await googleSignIn.isSignedIn()) {
         debugPrint('User signed in to Google. Signing out from Google');
         await googleSignIn.signOut();
-      } else {
-        debugPrint('User not signed in to Google');
       }
-
       // Sign out from Facebook if signed in
       debugPrint('Signing out from Facebook Auth');
       await FacebookAuth.instance.logOut();
