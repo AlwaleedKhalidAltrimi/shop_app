@@ -174,6 +174,8 @@ class SignupController extends GetxController {
         "uid": user.uid,
         "email": user.email,
         "user_name": name,
+        "photo_url": "",
+        "provider": "Email/Password",
         "created_at": FieldValue.serverTimestamp(),
       });
       debugPrint('User profile added to Firestore for $email');

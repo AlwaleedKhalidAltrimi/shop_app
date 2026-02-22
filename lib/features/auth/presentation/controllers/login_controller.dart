@@ -170,9 +170,12 @@ class LoginController extends GetxController {
             .collection("users")
             .doc(userCredential.user!.uid)
             .set({
+              "uid": userCredential.user!.uid,
               "user_name": userCredential.user!.displayName ?? "No Name",
               "email": userCredential.user!.email,
               "photo_url": userCredential.user!.photoURL,
+              "provider": "google",
+              "created_at": FieldValue.serverTimestamp(),
             });
         debugPrint('New user profile added to Firestore');
       }
@@ -261,10 +264,12 @@ class LoginController extends GetxController {
             .collection("users")
             .doc(userCredential.user!.uid)
             .set({
+              "uid": userCredential.user!.uid,
               "user_name": userCredential.user!.displayName ?? "No Name",
               "email": userCredential.user!.email,
               "photo_url": userCredential.user!.photoURL,
               "provider": "facebook",
+              "created_at": FieldValue.serverTimestamp(),
             });
         debugPrint('New user profile added to Firestore for Facebook user');
       }
