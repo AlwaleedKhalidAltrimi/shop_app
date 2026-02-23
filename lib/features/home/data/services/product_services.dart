@@ -5,7 +5,7 @@ import '../../../../core/constants/app_constants.dart';
 
 class AllProductsService {
   static Future<List<ProductModel>> getAllProducts() async {
-    var response = await http.get(
+    http.Response response = await http.get(
       Uri.parse('${AppConstants.baseUrl}/products'),
     );
 
