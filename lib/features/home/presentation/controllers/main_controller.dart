@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import '../views/home_view.dart';
 import '../views/category_view.dart';
-import '../views/favorites_view.dart';
+import '../../../favorite/presentation/views/favorites_view.dart';
 import '../views/settings_view.dart';
 
 class MainController extends GetxController {
