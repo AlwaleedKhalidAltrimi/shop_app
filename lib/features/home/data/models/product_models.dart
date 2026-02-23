@@ -28,6 +28,18 @@ class ProductModel {
       rating: RatingModel.fromJson(json['rating']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'price': price,
+      'description': description,
+      'category': category,
+      'image': image,
+      'rating': rating.toJson(),
+    };
+  }
 }
 
 class RatingModel {
@@ -41,5 +53,12 @@ class RatingModel {
       rate: (json['rate'] as num).toDouble(),
       count: json['count'] as int,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'rate': rate,
+      'count': count,
+    };
   }
 }
