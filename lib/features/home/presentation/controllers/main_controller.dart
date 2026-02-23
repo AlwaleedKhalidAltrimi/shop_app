@@ -14,5 +14,5 @@ class MainController extends GetxController {
     const SettingsView(),
   ].obs;
 
-  var title = ["SHOP APP", "Categories", "Favorites", "Settings"].obs;
+  var title = ["SHOP App", "Categories", "Favorites", "Settings"].obs;
 }
