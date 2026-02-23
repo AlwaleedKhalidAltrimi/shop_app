@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:shop_app/core/utils/app_styles.dart';
 import '../../../../core/utils/app_colors.dart';
 import 'widgets/card_items.dart';
-import 'widgets/search_text_form.dart';
+import 'widgets/search_text.dart';
 import '../controllers/product_controller.dart';
 
 class HomeView extends GetView<ProductController> {
@@ -13,10 +13,10 @@ class HomeView extends GetView<ProductController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Container(
                 width: double.infinity,
                 height: 180,
                 decoration: BoxDecoration(
@@ -27,7 +27,7 @@ class HomeView extends GetView<ProductController> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -35,26 +35,20 @@ class HomeView extends GetView<ProductController> {
                       const SizedBox(height: 5),
                       Text("INSPIRATION", style: AppStyles.font28boldPoppins),
                       const SizedBox(height: 20),
-                      SearchFormText(),
+                      const SearchText(),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Categories",
-                    style: AppStyles.font20mediumPoppins,
-                  ),
-                ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, top: 15),
+                child: Text("Categories", style: AppStyles.font20mediumPoppins),
               ),
-              const SizedBox(height: 15),
-              CardItems(),
-            ],
-          ),
+            ),
+            const CardItemsSliver(),
+          ],
         ),
       ),
     );
