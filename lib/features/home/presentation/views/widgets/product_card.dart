@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../data/models/product_models.dart';
+import '../../controllers/product_controller.dart';
 import 'product_footer.dart';
 import 'product_image.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends GetView<ProductController> {
   final ProductModel product;
   final VoidCallback onTap;
 
@@ -19,7 +21,7 @@ class ProductCard extends StatelessWidget {
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
@@ -31,25 +33,36 @@ class ProductCard extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.favorite_outline,
-                      color: AppColors.black,
-                    ),
+              Obx(() {
+                final isFav = controller.isFavourites(product.id);
+
+                return AnimatedScale(
+                  duration: const Duration(milliseconds: 300),
+                  scale: isFav ? 1.1 : 1.0,
+                  curve: Curves.easeOutBack,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          controller.toggleFavourites(product.id);
+                        },
+                        icon: Icon(
+                          isFav ? Icons.favorite : Icons.favorite_outline,
+                          color: isFav ? AppColors.red : AppColors.black,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.shopping_cart,
+                          color: AppColors.black,
+                        ),
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.shopping_cart,
-                      color: AppColors.black,
-                    ),
-                  ),
-                ],
-              ),
+                );
+              }),
               ProductImage(product.image),
               ProductFooter(product),
             ],
