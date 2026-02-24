@@ -44,7 +44,7 @@ class HomeView extends GetView<ProductController> {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, top: 15),
-                child: Text("Categories", style: AppStyles.font20mediumPoppins),
+                child: Text("Products", style: AppStyles.font20mediumPoppins),
               ),
             ),
             const CardItemsSliver(),
