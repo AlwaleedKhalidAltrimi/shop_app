@@ -31,6 +31,7 @@ class MainView extends GetView<MainController> {
         ),
 
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: AppColors.white,
           currentIndex: controller.currentIndex.value,
           type: BottomNavigationBarType.fixed,
           selectedItemColor: AppColors.primaryColor,
