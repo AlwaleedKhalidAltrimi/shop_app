@@ -89,4 +89,10 @@ abstract class AppStyles {
     fontFamily: FontFamilyHelper.poppins,
     fontWeight: FontWeightHelper.medium,
   );
+  static TextStyle font30boldPoppins = TextStyle(
+    fontSize: 30,
+    color: AppColors.black,
+    fontFamily: FontFamilyHelper.poppins,
+    fontWeight: FontWeightHelper.bold,
+  );
 }
