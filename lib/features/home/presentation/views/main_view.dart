@@ -45,11 +45,6 @@ class MainView extends GetView<MainController> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              activeIcon: Icon(Icons.category),
-              icon: Icon(Icons.category_outlined),
-              label: 'Categories',
-            ),
-            BottomNavigationBarItem(
               activeIcon: Icon(Icons.favorite),
               icon: Icon(Icons.favorite_border),
               label: 'Favorites',
