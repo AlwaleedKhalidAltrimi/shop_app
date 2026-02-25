@@ -36,31 +36,27 @@ class ProductCard extends GetView<ProductController> {
               Obx(() {
                 final isFav = controller.isFavourites(product.id);
 
-                return AnimatedScale(
-                  duration: const Duration(milliseconds: 300),
-                  scale: isFav ? 1.1 : 1.0,
-                  curve: Curves.easeOutBack,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          controller.toggleFavourites(product.id);
-                        },
-                        icon: Icon(
-                          isFav ? Icons.favorite : Icons.favorite_outline,
-                          color: isFav ? AppColors.red : AppColors.black,
-                        ),
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        controller.toggleFavourites(product.id);
+                      },
+                      icon: Icon(
+                        isFav ? Icons.favorite : Icons.favorite_outline,
+                        color: isFav ? AppColors.red : AppColors.black,
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.shopping_cart,
-                          color: AppColors.black,
-                        ),
+                    ),
+
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.shopping_cart,
+                        color: AppColors.black,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 );
               }),
               ProductImage(product.image),
